@@ -5,6 +5,28 @@ import gsap from "gsap";
 import * as dat from "dat.gui";
 import ky from "kyouka";
 
+const gui = new dat.GUI()
+gui.hide()
+
+const parameters = {
+  color: 0xff0000,
+  spin:() => {
+    console.log('spin')
+    gsap.to(mesh.rotation, {duration: 1, y: mesh.rotation.y + 10})
+  }
+}
+
+gui
+  .addColor(parameters, 'color')
+  .onChange(() => 
+  {
+    console.log('tweak did change')
+    material.color.set(parameters.color)
+  }) 
+
+gui
+  .add(parameters, 'spin')
+
 /**
  * Base
  */
@@ -17,20 +39,35 @@ const scene = new THREE.Scene();
 /**
  * Object
  */
-const params = {
-  color: 0xff0000,
-  spin() {
-    gsap.to(mesh.rotation, {
-      y: mesh.rotation.y + ky.deg2rad(360),
-      duration: 1,
-    });
-  },
-};
+// const params = {
+//   color: 0xff0000,
+//   spin() {
+//     gsap.to(mesh.rotation, {
+//       y: mesh.rotation.y + ky.deg2rad(360),
+//       duration: 1,
+//     });
+//   },
+// };
 
 const geometry = new THREE.BoxBufferGeometry(1, 1, 1);
-const material = new THREE.MeshBasicMaterial(params);
+const material = new THREE.MeshBasicMaterial({ color: parameters.color})
+// const material = new THREE.MeshBasicMaterial(params);
 const mesh = new THREE.Mesh(geometry, material);
 scene.add(mesh);
+
+// Debug
+// gui.add(mesh.position, 'y', -3, 3, 0.01)
+gui
+  .add(mesh.position, 'y')
+  .min(-3)
+  .max(3)
+  .step(0.01)
+
+gui
+  .add(mesh, 'visible')
+
+gui
+  .add(mesh.material, 'wireframe')
 
 /**
  * Sizes
@@ -100,11 +137,11 @@ const tick = () => {
 
 tick();
 
-const gui = new dat.GUI();
-gui.add(mesh.position, "y").min(-3).max(3).step(0.01).name("elevation");
-gui.add(mesh, "visible");
-gui.add(material, "wireframe");
-gui.addColor(params, "color").onChange(() => {
-  material.color.set(params.color);
-});
-gui.add(params, "spin");
+// const gui = new dat.GUI();
+// gui.add(mesh.position, "y").min(-3).max(3).step(0.01).name("elevation");
+// gui.add(mesh, "visible");
+// gui.add(material, "wireframe");
+// gui.addColor(params, "color").onChange(() => {
+//   material.color.set(params.color);
+// });
+// gui.add(params, "spin");
