@@ -38,8 +38,8 @@ const donutArray = []
 const handleFontLoad = (font) => {
   // console.log(font);
   const textGeometry = new THREE.TextBufferGeometry(
-    // window.prompt("请输入你想展示的文字\nInput the text you want to display",'Hello Three.js!'),
-    'Hello Three.js!',
+    window.prompt("请输入你想展示的文字\nInput the text you want to display",'Hello Three.js!'),
+    // 'Hello Three.js!',
     {
       font,
       size: 0.5,
@@ -168,9 +168,9 @@ const tick = () => {
   window.requestAnimationFrame(tick);
 
   for(let i = 0; i < 300; i += 1){
-    donutArray[i].position.x += (Math.random() - 0.5 ) * 0.1
-    donutArray[i].position.y += (Math.random() - 0.5 ) * 0.1
-    donutArray[i].position.z += (Math.random() - 0.5 ) * 0.1
+    // donutArray[i].position.x += (Math.random() - 0.5 ) * 0.1
+    // donutArray[i].position.y += (Math.random() - 0.5 ) * 0.1
+    // donutArray[i].position.z += (Math.random() - 0.5 ) * 0.1
 
     // donutArray[i].rotation.x += Math.random() * Math.PI
     // donutArray[i].rotation.y += Math.random() * Math.PI
